@@ -3,25 +3,35 @@ import { useState } from 'react';
 import Stats from '../components/Stats';
 
 export default function CountrySelector() {
-  const countries = useStats('https://covid19.mathdro.id/api/countries');
-  const [selectedCountry, setSelectedCountry] = useState('US');
-  if (!countries) return <p>Loading ....</p>;
+  const { stats: countries, loading, error } = useStats(
+    'https://covid19.mathdro.id/api/countries'
+  );
+  const [selectedCountry, setSelectedCountry] = useState('USA');
+  if (loading) return <p>Loading...</p>;
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error...</p>;
+
   return (
     <div>
+      <h2>Currently Showing {selectedCountry}</h2>
       <select
         onChange={e => {
           setSelectedCountry(e.target.value);
         }}
       >
-        {Object.entries(countries.countries).map(([country, code]) => {
-          return (
-            <option key={code} value={code}>
-              {country}
-            </option>
-          );
-        })}
+        {Object.entries(countries.countries).map(([country, code]) => (
+          <option
+            selected={selectedCountry === countries.iso3[code]}
+            key={code}
+            value={countries.iso3[code]}
+          >
+            {country}
+          </option>
+        ))}
       </select>
-      <Stats url="https://covid19.mathdro.id/api/countries/USA"></Stats>
+      <Stats
+        url={`https://covid19.mathdro.id/api/countries/${selectedCountry}`}
+      ></Stats>
     </div>
   );
 }
