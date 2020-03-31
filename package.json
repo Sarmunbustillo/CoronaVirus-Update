@@ -18,7 +18,7 @@
     "url": "https://github.com/Sarmunbustillo/CoronaVirus-Update/issues"
   },
   "dependencies": {
-    "next": "^9.3.0",
+    "next": "^9.3.2",
     "normalize.css": "^8.0.1",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
